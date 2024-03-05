@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     enum: ['male', 'female'] // enum means string objects
   }, 
-  profilePicture: {
+  profilePic: {
     type: String,
     default: '',
   },
