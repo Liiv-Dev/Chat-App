@@ -1,4 +1,6 @@
 import User from '../models/User.js';
+import bcryptjs from 'bcryptjs';
+import authToken from '../utils/authToken.js';
 
 // Sign up User
 export const signUp = async (req, res) => {
@@ -11,6 +13,10 @@ export const signUp = async (req, res) => {
 
     if (user) return res.status(400).json({ message: 'Username already exists' });
 
+    // Hash the password
+    const salt = await bcryptjs.genSalt(12);
+    const hashPassword = await bcryptjs.hash(password, salt);
+
     // Avatar API https://avatar.iran.liara.run/
 
     const maleAvatar = `https://avatar.iran.liara.run/public/boy?username=${userName}`;
@@ -19,19 +25,25 @@ export const signUp = async (req, res) => {
     const newUser = new User({
       fullName,
       userName,
-      password,
+      password: hashPassword,
       gender,
       profilePic: gender === "male" ? maleAvatar : femaleAvatar
     });
 
-    await newUser.save();
+    if(newUser) {
+      // JWT token for user authentication
+      authToken(newUser._id, res);
+      await newUser.save();
 
-    res.status(201).json({
-      _id: newUser._id,
-      fullName: newUser.fullName,
-      userName: newUser.userName,
-      profilePic: newUser.profilePic,
-    });
+      res.status(201).json({
+        _id: newUser._id,
+        fullName: newUser.fullName,
+        userName: newUser.userName,
+        profilePic: newUser.profilePic,
+      });
+    } else {
+      res.status(400).json({ message: 'Invalid User Data' });
+    }
 
   } catch (error) {
     console.log('Error with signUp Controller',error);
@@ -42,11 +54,9 @@ export const signUp = async (req, res) => {
 // Login User
 export const login = (req, res) => {
 
-
 }
 
 // Logout User
 export const logout = (req, res) => {
-
 
 }
