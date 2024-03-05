@@ -5,15 +5,16 @@ import authRoutes from './routes/authRoutes.js';
 import connection from './config/connection.js';
 
 const app = express();
-
-dotenv.config();
 const PORT = process.env.PORT || 3001;
 
-app.get('/', (req, res) => {
-  // root route 
-  res.send('YOOOO');
-})
+dotenv.config();
 
+//app.get('/', (req, res) => {
+//  // root route 
+//  res.send('YOOOO');
+//})
+
+app.use(express.json()); // to parse the incoming requests with JSON payloads
 app.use('/api/auth', authRoutes);
 
 app.listen(PORT, () => {
