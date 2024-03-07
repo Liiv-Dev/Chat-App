@@ -52,11 +52,35 @@ export const signUp = async (req, res) => {
 }
 
 // Login User
-export const login = (req, res) => {
+export const login = async (req, res) => {
+  try {
+    const { userName, password } = req.body;
+    const user = await User.findOne({ userName });
+    const isPasswordCorrect = await bcryptjs.compare(password, user.password);
 
+    if (!user || !isPasswordCorrect) 
+    return res.status(400).json({ message: 'Invalid credentials' }); 
+
+    // JWT token for user authentication
+    authToken(user._id, res);
+
+    res.status(200).json({
+      _id: user._id,
+      fullName: user.fullName,
+      userName: user.userName,
+      profilePic: user.profilePic,
+    });
+
+  } catch (error) {
+    
+  }
 }
 
 // Logout User
-export const logout = (req, res) => {
-
+export const logout = async (req, res) => {
+  try {
+    
+  } catch (error) {
+    
+  }
 }
