@@ -48,7 +48,11 @@ export const getMessages = async (req, res) => {
 
     const conversation = await Conversation.findOne({
       participants: { $all: [senderId, userToChatId] },
-    }).populate('messages');
+    }).populate('messages'); // Not referrence but actual messages
+
+    if (!conversation) return res.status(200).json([]);
+
+    res.status(200).json(conversation.messages);
 
   } catch (error) {
     console.log('Error in getMessages Controller', error.message);
