@@ -72,15 +72,18 @@ export const login = async (req, res) => {
     });
 
   } catch (error) {
-    
+    console.log('Error with login Controller', error);
+    res.status(500).json({ message: 'Something went wrong' });
   }
 }
 
 // Logout User
 export const logout = async (req, res) => {
   try {
-    
+    res.cookie('token', '', { maxAge: 0 });
+    res.status(200).json({ message: 'Logged out successfully' });
   } catch (error) {
-    
+    console.log('Error with logout Controller', error);
+    res.status(500).json({ message: 'Something went wrong' });
   }
 }
