@@ -2,7 +2,7 @@ import React from 'react'
 import Gender from './Gender'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import useSignup from '../../components/hooks/useSignup'
+import useSignup from '../../hooks/useSignup'
 
 function SignUp() {
 
@@ -80,7 +80,9 @@ function SignUp() {
         Have An Account? Login!
       </Link>
       <br />
-      <button className="btn glass mt-2 text-green-800">Sign Up</button>
+      <button className="btn glass mt-2 text-green-800" disabled={loading}>
+        {loading ? <span className="loading loading-spinner"></span> : 'Sign Up'}
+      </button>
     </form>
 
     </div>
