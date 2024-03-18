@@ -6,7 +6,7 @@ const Conversations = () => {
   const { loading, conversations } = useGetConversations();
 
   return (
-    <div className='py-2 flex flex-col'>
+    <div className='py-2 flex flex-col overflow-y-auto'>
 
   {conversations.map((conversation, index) => {
     return (
