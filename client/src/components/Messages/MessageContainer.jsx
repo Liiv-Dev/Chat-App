@@ -3,6 +3,7 @@ import MessageInput from "./MessageInput"
 import Messages from "./Messages"
 import useConversation from "../../zustand/useConversation";
 import { useEffect } from "react";
+import { useAuthContext } from "../../context/AuthContext";
 
 
 const MessageContainer = () => {
@@ -39,10 +40,11 @@ export default MessageContainer
 
 {/* If no chat is selected, show this message */}
 const NoChatSelected = () => {
+  const { authUser } = useAuthContext();
   return (
     <div className="flex items-center justify-center w-full h-full">
       <div className="px-4 text-center sm:text-lg md:text-green-800 font-semibold flex flex-col items-center gap-2">
-        <p>Hello User👋🏾!</p>
+        <p>Hi {authUser.fullName}👋🏾!</p>
         <p>Select a chat to start a Convo</p>
         <AiTwotoneMessage className="text-9xl text-green-800" />
       </div>
