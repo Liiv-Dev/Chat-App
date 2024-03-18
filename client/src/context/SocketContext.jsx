@@ -13,6 +13,7 @@ export const SocketContextProvider = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const { authUser } = useAuthContext();
 
+  // http://localhost:3001
   useEffect(() => {
     if (authUser) {
       const socket = io('https://convo-on6g.onrender.com', {

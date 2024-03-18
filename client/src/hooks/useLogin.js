@@ -18,10 +18,10 @@ const useLogin = () => {
         },
         body: JSON.stringify({ userName, password })
       });
-      const data = await res.json();
-      if (data.error) {
-        throw new Error(data.error);
+      if (!res.ok) { // check if the response status is not ok
+        throw new Error('Login failed');
       }
+      const data = await res.json();
       
       localStorage.setItem('convo-user', JSON.stringify(data));
       setAuthUser(data);
